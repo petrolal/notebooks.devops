@@ -1,14 +1,12 @@
 services:
   jupyter-lab:
     image: jupyter/datascience-notebook:latest
-    container_name: my-jupyter-lab
+    container_name: devops_jupyter_notebooks
     ports:
       - "8888:8888"
     volumes:
       - ./notebooks:/home/jovyan/work/notebooks
-      - ./scripts:/home/jovyan/work/scripts
-      - ./data:/home/jovyan/work/data
     environment:
-      - JUPYTER_ENABLE_LAB=yes # Força o uso do JupyterLab (mais moderno)
-      - TZ=America/Sao_Paulo # Configura o fuso horário (ajuste para sua região)
-    restart: unless-stopped # Se o PC reiniciar, o container sobe automaticamente
+      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_TOKEN=2d355bda37aacf782f6231150155c884e0de542e234b89f9
+    restart: unless-stopped

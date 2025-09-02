@@ -64,3 +64,18 @@ return {
   },
 }
 ```
+
+# Definir o token do jupyter
+
+Execute o seguinte comando
+
+```shell
+# Suba o container (sem definir JUPYTER_TOKEN no compose)
+docker compose up -d
+
+# Comando para extrair o token dos logs de forma limpa
+docker compose logs jupyter-lab | grep -o "token=[a-zA-Z0-9]*" | head -n1 | cut -d= -f2
+
+# Ou, de forma ainda mais direta, execute isso dentro do container:
+docker exec my-jupyter-lab jupyter server list | grep -o "token=[a-zA-Z0-9]*" | head -n1 | cut -d= -f2
+```
