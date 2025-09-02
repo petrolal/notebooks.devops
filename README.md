@@ -35,7 +35,6 @@ docker run -p 8888:8888 \
 Configuração do magma abaixo
 
 ```lua
--- ~/.config/nvim/lua/plugins/init.lua
 return {
   {
     "dccsillag/magma-nvim",
