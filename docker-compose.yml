@@ -1,12 +1,26 @@
 services:
-  jupyter-lab:
-    image: jupyter/datascience-notebook:latest
-    container_name: devops_jupyter_notebooks
+  jupyter:
+    image: jupyter/base-notebook
+    container_name: notebooks-devops
     ports:
       - "8888:8888"
     volumes:
-      - ./notebooks:/home/jovyan/work/notebooks
+      - ./notebooks:/home/jovyan/work
+      - ./data:/home/jovyan/data # Volume adicional para dados
+      - ./config:/home/jovyan/.jupyter # Volume para configurações
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - .env
     environment:
-      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_ENABLE_LAB=0
+      - CHOWN_HOME=yes
+      - CHOWN_EXTRA_OPTS=-R
+      - CHOWN_EXTRA=/home/jovyan/work
       - JUPYTER_TOKEN=2d355bda37aacf782f6231150155c884e0de542e234b89f9
+    user: root
+    command: >
+      sh -c "pip install docker --no-cache-dir && \
+      chown -R jovyan:users /home/jovyan && \
+      exec su jovyan -c '/opt/conda/bin/jupyter notebook --NotebookApp.token='' --ip=0.0.0.0 --notebook-dir=/home/jovyan/work'"
+
     restart: unless-stopped
