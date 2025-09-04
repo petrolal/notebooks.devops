@@ -20,7 +20,5 @@ services:
     user: root
     command: >
       sh -c "pip install docker --no-cache-dir && \
-      chown -R jovyan:users /home/jovyan && \
       exec su jovyan -c '/opt/conda/bin/jupyter notebook --NotebookApp.token='' --ip=0.0.0.0 --notebook-dir=/home/jovyan/work'"
-
-    restart: unless-stopped
+    restart: always
